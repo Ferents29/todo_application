@@ -1,7 +1,7 @@
 import './App.css';
 import {useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {todoAC} from "./store/todoReducer";
+import {addTodoAC, doneTodoAC, removeTodoAC, unDoneTodoAC} from "./store/todoReducer";
 
 function App() {
     const dispatch = useDispatch()
@@ -13,10 +13,23 @@ function App() {
             id:Date.now(),
             title:title,
             todo:todo,
+            doneStatus:true,
+            importantStatus:true
         }
-        dispatch(todoAC(newTodo))
+        dispatch(addTodoAC(newTodo))
         titleObject.current.value = ''
         todoObject.current.value = ''
+    }
+
+    const removeTodo = (id) => {
+        dispatch(removeTodoAC(id))
+    }
+
+    const doneTodo = (id) => {
+        dispatch(doneTodoAC(id))
+    }
+    const unDoneTodo = (id) => {
+        dispatch(unDoneTodoAC(id))
     }
   return (
     <div className="App">
@@ -36,6 +49,21 @@ function App() {
                     <div><span style={{color:'green'}}>Описание задания</span><br/>
                         {t.todo}
                     </div>
+                    <div>
+                        <button onClick={() => removeTodo(t.id)}>Удалить задание</button>
+                    </div>
+                    {t.doneStatus
+                        ?
+                        <div>
+                            <span style={{backgroundColor:'red'}}>Задание не сделано</span>
+                            <button onClick={() => doneTodo(t.id)}>Задание сделано</button>
+                        </div>
+                        :
+                        <div>
+                            <span style={{backgroundColor:'green'}}>Задание сделано</span>
+                            <button onClick={() => unDoneTodo(t.id)}>Отметить как задание не сделано</button>
+                        </div>
+                    }
                 </div>
             )}
         </div>
