@@ -52,18 +52,24 @@ function App() {
                     <div>
                         <button onClick={() => removeTodo(t.id)}>Удалить задание</button>
                     </div>
-                    {t.doneStatus
-                        ?
-                        <div>
-                            <span style={{backgroundColor:'red'}}>Задание не сделано</span>
-                            <button onClick={() => doneTodo(t.id)}>Задание сделано</button>
-                        </div>
-                        :
-                        <div>
-                            <span style={{backgroundColor:'green'}}>Задание сделано</span>
-                            <button onClick={() => unDoneTodo(t.id)}>Отметить как задание не сделано</button>
-                        </div>
-                    }
+                    <div style={{padding:10,display:'flex'}}>
+                        {t.doneStatus
+                            ?
+                            <div>
+                                <span style={{margin:10,borderRadius:10,backgroundColor:'red',padding:10}}>
+                                    Задание не сделано
+                                </span>
+                                <button onClick={() => doneTodo(t.id)}>Задание сделано</button>
+                            </div>
+                            :
+                            <div>
+                                <span style={{margin:10,borderRadius:10,backgroundColor:'green',padding:10}}>
+                                    Задание сделано
+                                </span>
+                                <button onClick={() => unDoneTodo(t.id)}>Отметить как задание не сделано</button>
+                            </div>
+                        }
+                    </div>
                 </div>
             )}
         </div>
