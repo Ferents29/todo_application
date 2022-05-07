@@ -38,6 +38,30 @@ export const todoReducer = (state = defaultState,action) => {
                 })
             }
         }
+        case 'ON_IMPORTANT_TODO_REDUCER':{
+            return {
+                ...state,
+                todo:state.todo.filter(elem => {
+                    if(elem.id == action.id){
+                        elem.importantStatus = ! elem.importantStatus
+                    }
+                    return elem
+                })
+            }
+        }
+        case 'UN_IMPORTANT_TODO_REDUCER':{
+            return {
+                ...state,
+                todo:state.todo.filter(elem => {
+                    if(elem.id == action.id){
+                        elem.importantStatus = ! elem.importantStatus
+                    }
+                    return elem
+                })
+            }
+        }
+
+
         default:
             return state
     }
@@ -53,4 +77,10 @@ export const doneTodoAC = (id) => {
 }
 export const unDoneTodoAC = (id) => {
     return {type:'UN_DONE_TODO_REDUCER',id:id}
+}
+export const onImportantAC = (id) => {
+    return {type:'ON_IMPORTANT_TODO_REDUCER',id:id}
+}
+export const unImportantAC = (id) => {
+    return {type:'UN_IMPORTANT_TODO_REDUCER',id:id}
 }

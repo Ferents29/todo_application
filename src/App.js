@@ -1,13 +1,14 @@
 import './App.css';
 import {useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addTodoAC, doneTodoAC, removeTodoAC, unDoneTodoAC} from "./store/todoReducer";
+import {addTodoAC, doneTodoAC, onImportantAC, removeTodoAC, unDoneTodoAC, unImportantAC} from "./store/todoReducer";
 
 function App() {
     const dispatch = useDispatch()
     const todos = useSelector(state => state.todoReducer.todo)
     const todoObject = useRef()
     const titleObject = useRef()
+
     const addTodo = (title, todo) => {
         let newTodo = {
             id:Date.now(),
@@ -20,17 +21,22 @@ function App() {
         titleObject.current.value = ''
         todoObject.current.value = ''
     }
-
     const removeTodo = (id) => {
         dispatch(removeTodoAC(id))
     }
-
     const doneTodo = (id) => {
         dispatch(doneTodoAC(id))
     }
     const unDoneTodo = (id) => {
         dispatch(unDoneTodoAC(id))
     }
+    const onImportant = (id) => {
+        dispatch(onImportantAC(id))
+    }
+    const unImportant = (id) => {
+        dispatch(unImportantAC(id))
+    }
+
   return (
     <div className="App">
 
@@ -66,7 +72,25 @@ function App() {
                                 <span style={{margin:10,borderRadius:10,backgroundColor:'green',padding:10}}>
                                     Задание сделано
                                 </span>
-                                <button onClick={() => unDoneTodo(t.id)}>Отметить как задание не сделано</button>
+                                <button onClick={() => unDoneTodo(t.id)}>Отметить как не сделано</button>
+                            </div>
+                        }
+                    </div>
+                    <div style={{display:'flex',margin:30}}>
+                        {t.importantStatus
+                            ?
+                            <div>
+                                <div style={{width:30,height:30,borderRadius:5,border:'4px solid white',backgroundColor:'yellow'}}
+                                      onClick={() => onImportant(t.id)}>
+                                </div>
+                                <div>Снять отметку как важное</div>
+                            </div>
+                            :
+                            <div>
+                                <div style={{width:30,height:30,borderRadius:5,border:'4px solid white',backgroundColor:null}}
+                                      onClick={() => unImportant(t.id)}>
+                                </div>
+                                <div>Выделить как важное</div>
                             </div>
                         }
                     </div>
